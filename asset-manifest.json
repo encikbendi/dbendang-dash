@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/dbendang-dash/static/css/main.7da961ed.css",
+    "main.js": "/dbendang-dash/static/js/main.9a39ee1d.js",
+    "index.html": "/dbendang-dash/index.html",
+    "main.7da961ed.css.map": "/dbendang-dash/static/css/main.7da961ed.css.map",
+    "main.9a39ee1d.js.map": "/dbendang-dash/static/js/main.9a39ee1d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7da961ed.css",
+    "static/js/main.9a39ee1d.js"
+  ]
+}
