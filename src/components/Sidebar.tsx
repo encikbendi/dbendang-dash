@@ -1,11 +1,24 @@
+import { useNavigate } from "react-router-dom"
 import { HamburgerIcon } from "../icons/HamburgerIcon"
 import useMenuStore from "../stores/menuStore"
 import { MenuButton } from "./MenuButton"
 import { EventNames } from "./enum"
+import { useEffect } from "react"
 
 
 export const Sidebar = () => {
-    const {setSelectedMenu} = useMenuStore()
+    const {setSelectedMenu, selectedMenu} = useMenuStore()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!selectedMenu) {
+            return
+        } else if (selectedMenu === "overview") {
+            navigate('/overview')
+        } else {
+            navigate(`/event/${selectedMenu}`)
+        }
+    }, [selectedMenu])
 
     return (
     <aside className="group fixed flex flex-col w-12 overflow-hidden hover:w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
@@ -25,6 +38,9 @@ export const Sidebar = () => {
     </div>
     <div className="hidden flex-col justify-between flex-1 mt-6 group-hover:flex">
         <nav className="flex flex-col gap-3">
+                    <div onClick={() => setSelectedMenu("overview")}>
+                        <MenuButton title={"Keseluruhan"}/>
+                    </div>
             {
                 Object.values(EventNames).map((e: EventNames, index:number) => (
                     <div key={e} onClick={() => setSelectedMenu(e)}>
@@ -33,10 +49,6 @@ export const Sidebar = () => {
                 ))
             }
         </nav>
-
-        {/* <button className="flex items-center px-4 -mx-2">
-            <span className="mx-2 mt-4 font-medium text-gray-800 dark:text-gray-200">D'Bendang Melaka</span>
-        </button> */}
     </div>
 </aside>)
 }

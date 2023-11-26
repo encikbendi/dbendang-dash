@@ -1,12 +1,20 @@
 import { useEffect, useMemo, useState } from "react"
 import { config } from "../config"
 import useMenuStore from "../stores/menuStore"
+import { useLoaderData } from "react-router-dom"
 
 export const Table = ({search, query}: any) => {
     const [orders, setOrders] = useState<any>()
     const [page, setPage] = useState<number>(1)
-    const {selectedMenu}  = useMenuStore()     
+    const {selectedMenu, setSelectedMenu}  = useMenuStore()     
     const [loading, setLoading] = useState(false)
+
+
+    // useEffect(() => {
+    //     if (viewModeEvent) {
+    //         setSelectedMenu(viewModeEvent)
+    //     }
+    // },[])
 
     const handleChangePage = (newPage: number) => {
         setLoading(true)
@@ -71,7 +79,6 @@ export const Table = ({search, query}: any) => {
         return <p className="text-slate-200 flex justify-center">Loading tickets list...</p>
     }
 
-    console.log('listing ===> ', listing)
     return (
     <section className="container px-4 mx-auto">
     <div className="flex flex-col">
@@ -81,23 +88,18 @@ export const Table = ({search, query}: any) => {
                     <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead className="bg-gray-50 dark:bg-gray-800">
                             <tr>
-                                <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    <div className="flex items-center gap-x-3">
-                                        <button className="flex items-center gap-x-2">
-                                            <span >ID</span>
-                                        </button>
-                                    </div>
-                                </th>
-
-                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Hadir
-                                </th>
 
                                 <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     Nama
                                 </th>
                                 <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     No Tel
+                                </th>
+                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    No KP
+                                </th>
+                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Hadir
                                 </th>
                                 <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     Bilangan
@@ -108,28 +110,27 @@ export const Table = ({search, query}: any) => {
                             {
                                 listing?.map((order:any) => {
                                     return (
-                                        <tr key={order}>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <span>{order._id}</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
-                                                    <h2 className="text-sm font-normal">{!!order.participants[0].attend ? 'Sudah' : 'Belum'}</h2>
-                                                </div>
-                                            </td>
+                                        <tr key={order._id}>
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 <div className="flex items-center gap-x-2">
                                                     <div>
                                                         <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{order.participants[0].name}</h2>
-                                                        <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{order.participants[0].kp}</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                 <div className="inline-flex items-center gap-x-3">
                                                     <span>{order.participants[0].address}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                <div className="inline-flex items-center gap-x-3">
+                                                    <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{order.participants[0].kp}</h2>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
+                                                    <h2 className="text-sm font-normal">{!!order.participants[0].attend ? 'Sudah' : 'Belum'}</h2>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
@@ -146,32 +147,6 @@ export const Table = ({search, query}: any) => {
                 </div>
             </div>
         </div>
-    </div>
-
-    <div className="flex items-center justify-between mt-6">
-        <button onClick={() => handleChangePage(page - 1)} className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 rtl:-scale-x-100">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-            </svg>
-
-            <span>
-                previous
-            </span>
-        </button>
-
-        <div className="items-center hidden md:flex gap-x-3">
-            {pages}
-        </div>
-
-        <button onClick={() => handleChangePage(page + 1)} className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-            <span>
-                Next
-            </span>
-
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 rtl:-scale-x-100">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-            </svg>
-        </button>
     </div>
 </section>
     )

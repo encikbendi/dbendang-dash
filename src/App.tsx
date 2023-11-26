@@ -3,12 +3,21 @@ import './App.css';
 import { Protect } from './components/Protect';
 import { Table } from './components/Table';
 import { Sidebar } from './components/Sidebar';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const App = () => {
   const [password, setPassword] = useState<any>(localStorage.getItem("password") || null)
   const [search, setSearch] = useState<any>(null)
   const [query, setQuery] = useState<any>()
-
+  const navigate = useNavigate()
+  const {name} = useParams()
+  
+  useEffect(() => {
+    if (name === 'all') {
+      navigate('/overview')
+    }
+  }, [name])
+    
   useEffect(() => {
     localStorage.setItem("password", password)
   }, [password])
@@ -23,7 +32,7 @@ const App = () => {
     <div>
       <Sidebar />
       {
-        password === 'SMFadminHiphubMY' ? (
+        password === 'DBendangAdminDashboard' ? (
             <div className='bg-slate-700 p-10 min-h-screen min-w-screen'>
               <div className='flex gap-2 justify-center my-5'>
                 <input onKeyDown={(e) => {
@@ -42,5 +51,7 @@ const App = () => {
     </div>
   )
 }
+
+
 
 export default App;
