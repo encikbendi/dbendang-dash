@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { config } from "../config"
 import { Sidebar } from "./Sidebar"
-import { EventNames } from "./enum"
 
 const Overview = () => {
     const [eventData, setEventData] = useState<any>([])
@@ -47,7 +46,7 @@ const Overview = () => {
                                                     Had Peserta
                                                 </th>
                                                 <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    Download
+                                                    View
                                                 </th>
                                             </tr>
                                         </thead>
@@ -74,7 +73,7 @@ const Overview = () => {
                                                                 </div>
                                                             </td>
                                                             <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap flex gap-2">
-                                                                <button className={`px-3 py-1 ${event.players === event.playerLimit ? 'bg-emerald-600' : 'bg-slate-700'} rounded-lg text-slate-300`}>PDF</button>
+                                                                <a href={`https://dbendangmelaka.com:8090/senarai-penuh?event=${event.name}&token=${config.token.m2m}`} target="_blank" className={`px-3 py-1 ${event.players === event.playerLimit ? 'bg-emerald-600' : 'bg-slate-700'} rounded-lg text-slate-300`} rel="noreferrer">PDF</a>
                                                                 <button className={`px-3 py-1 ${event.players === event.playerLimit ? 'bg-emerald-600' : 'bg-slate-700'} rounded-lg text-slate-300`}>Excel</button>
                                                             </td>
                                                         </tr>
