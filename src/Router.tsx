@@ -6,8 +6,8 @@ import Overview from "./components/Overview"
 const Router = memo(() => {return (
     <BrowserRouter>
         <Routes>
-            <Route index path="/" element={<App />} />
-            <Route index path="/event/:name" element={<App />} />
+            <Route index path="/dbendang-dash" element={<App />} />
+            <Route path="/event/:name" element={<App />} />
             <Route path="/overview" element={<Overview />} />
         </Routes>
     </BrowserRouter>
