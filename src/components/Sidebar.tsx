@@ -3,12 +3,50 @@ import { HamburgerIcon } from "../icons/HamburgerIcon"
 import useMenuStore from "../stores/menuStore"
 import { MenuButton } from "./MenuButton"
 import { EventNames } from "./enum"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import usePasswordStore from "../stores/passwordStore"
+import { config } from "../config"
 
 
 export const Sidebar = () => {
     const {setSelectedMenu, selectedMenu} = useMenuStore()
+    const {password} = usePasswordStore()
     const navigate = useNavigate()
+    const [eventNames, setEventNames] = useState<any>([])
+    const [debouncedPassword, setDebouncedPassword] = useState<any>(password)
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedPassword(password)
+        }, 1000)
+
+        return () => {
+            clearTimeout(handler)
+        }
+    }, [password])
+
+    useEffect(() => {
+        if (debouncedPassword?.length < 10) return
+
+        const queryObj: any = {
+            token: config.token.m2m
+        }
+
+        if (debouncedPassword !== 'DBendangAdminDashboard') {
+            queryObj.phone = debouncedPassword
+        }
+
+        fetch(`${config.shop.apiURL}/get-events`, {
+          method: "POST",
+          cache: "no-store",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(queryObj),
+        })
+          .then((response) => response.json())
+          .then((data) => setEventNames(data.map((d: any) => d.name)));
+      }, [debouncedPassword]);    
 
     useEffect(() => {
         if (!selectedMenu) {
@@ -38,11 +76,14 @@ export const Sidebar = () => {
     </div>
     <div className="hidden flex-col justify-between flex-1 mt-6 group-hover:flex">
         <nav className="flex flex-col gap-3">
+            {
+
+            }
                     <div onClick={() => setSelectedMenu("overview")}>
                         <MenuButton title={"Keseluruhan"}/>
                     </div>
             {
-                Object.values(EventNames).map((e: EventNames, index:number) => (
+                eventNames?.map((e: EventNames, index:number) => (
                     <div key={e} onClick={() => setSelectedMenu(e)}>
                         <MenuButton title={e} index={index}/>
                     </div>

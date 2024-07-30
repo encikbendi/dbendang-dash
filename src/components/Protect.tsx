@@ -1,6 +1,8 @@
 import { useRef, useState } from "react"
+import usePasswordStore from "../stores/passwordStore"
 
-export const Protect = ({setPassword} : {setPassword: (password:string) => void}) => {
+export const Protect = () => {
+    const {password, setPassword} = usePasswordStore()
     const inputRef = useRef<any>()
     const [buttonText, setButtonText] = useState<string>('show')
 

@@ -4,9 +4,10 @@ import { Protect } from './components/Protect';
 import { Table } from './components/Table';
 import { Sidebar } from './components/Sidebar';
 import { useNavigate, useParams } from 'react-router-dom';
+import usePasswordStore from './stores/passwordStore';
 
 const App = () => {
-  const [password, setPassword] = useState<any>(localStorage.getItem("password") || null)
+  const {password, setPassword} = usePasswordStore()
   const [search, setSearch] = useState<any>(null)
   const [query, setQuery] = useState<any>()
   const navigate = useNavigate()
@@ -32,7 +33,7 @@ const App = () => {
     <div>
       <Sidebar />
       {
-        password === 'DBendangAdminDashboard' ? (
+        password.length >= 10 ? (
             <div className='bg-slate-700 p-10 min-h-screen min-w-screen'>
               <div className='flex gap-2 justify-center my-5'>
                 <input onKeyDown={(e) => {
@@ -45,7 +46,7 @@ const App = () => {
               <Table query={query} search={search}/>
             </div>
           ) : (
-            <Protect setPassword={setPassword}/>
+            <Protect />
         )
       }
     </div>

@@ -6,15 +6,9 @@ import { useLoaderData } from "react-router-dom"
 export const Table = ({search, query}: any) => {
     const [orders, setOrders] = useState<any>()
     const [page, setPage] = useState<number>(1)
-    const {selectedMenu, setSelectedMenu}  = useMenuStore()     
+    const {selectedMenu}  = useMenuStore()     
     const [loading, setLoading] = useState(false)
 
-
-    // useEffect(() => {
-    //     if (viewModeEvent) {
-    //         setSelectedMenu(viewModeEvent)
-    //     }
-    // },[])
 
     const handleChangePage = (newPage: number) => {
         setLoading(true)
