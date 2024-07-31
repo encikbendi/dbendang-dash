@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/dbendang-dash/static/css/main.29a2831f.css",
-    "main.js": "/dbendang-dash/static/js/main.4961127a.js",
+    "main.js": "/dbendang-dash/static/js/main.d5a23fa1.js",
     "index.html": "/dbendang-dash/index.html",
     "main.29a2831f.css.map": "/dbendang-dash/static/css/main.29a2831f.css.map",
-    "main.4961127a.js.map": "/dbendang-dash/static/js/main.4961127a.js.map"
+    "main.d5a23fa1.js.map": "/dbendang-dash/static/js/main.d5a23fa1.js.map"
   },
   "entrypoints": [
     "static/css/main.29a2831f.css",
-    "static/js/main.4961127a.js"
+    "static/js/main.d5a23fa1.js"
   ]
 }
