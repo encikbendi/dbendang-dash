@@ -108,13 +108,17 @@ export const Table = ({search, query}: any) => {
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 <div className="flex items-center gap-x-2">
                                                     <div>
-                                                        <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{order.participants[0].name}</h2>
+                                                        {
+                                                            order.participants?.map((ptcpt:any) => {
+                                                                return <p className="text-sm font-medium text-gray-800 dark:text-white ">{ptcpt.name}</p>
+                                                            })
+                                                        }
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                 <div className="inline-flex items-center gap-x-3">
-                                                    <span>{order.participants[0].address}</span>
+                                                    <span>{order.participants[0].phone}</span>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
